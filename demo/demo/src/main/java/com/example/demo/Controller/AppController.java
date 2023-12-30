@@ -24,6 +24,8 @@ public class AppController {
     OrderList orderList;
     @Autowired
     CompoundOrder compoundOrder;
+    @Autowired
+    OrderState orderState;
 
     @PostMapping("/signup")
     public Response signUp(@RequestBody CustomerAccount customerAccount){
@@ -115,4 +117,13 @@ public class AppController {
     public Order returnOrder(@PathVariable("username") String username, @PathVariable("orderNumber") int orderNumber){
         return orderList.ReturnOrder(username,orderNumber);
     }
+    @PostMapping("/orderstate-placement/{username}/{orderID}")
+    public void OrderStatePlacement(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
+        orderState.OrderStatePlacement(username,orderID);
+    }
+    @PostMapping("/orderstate-cancellation/{username}/{orderID}")
+    public void OrderStateCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
+        orderState.OrderStateCancellation(username,orderID);
+    }
+
 }
