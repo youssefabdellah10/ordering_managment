@@ -97,8 +97,7 @@ public class AppController {
     public Order selectProducts(@RequestBody Map<String, Object> requestBody) {
         String username = (String) requestBody.get("username");
         List<String> productNames = (List<String>) requestBody.get("names");
-        List<Product> products;
-        products = simpleOrder.SelectProductsByNames(username, productNames);
+        simpleOrder.SelectProductsByNames(username, productNames);
         return simpleOrder;
     }
 
@@ -108,7 +107,7 @@ public class AppController {
         for(Map.Entry<String,List<String>> entry : requestBody.entrySet()){
             String username = entry.getKey();
             List<String> names = entry.getValue();
-            List<Product> products = compoundOrder.SelectProductsByNames(username,names);
+            compoundOrder.SelectProductsByNames(username,names);
             compoundOrder.addChild(compoundOrder)   ;
         }
         return compoundOrder.GetChild();
@@ -125,5 +124,6 @@ public class AppController {
     public void OrderStateCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
         orderState.OrderStateCancellation(username,orderID);
     }
+
 
 }

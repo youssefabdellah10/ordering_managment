@@ -40,6 +40,7 @@ public class CompoundOrder extends Order {
         }
         return null;
     }
+
     public void removeOrder(Order order){
         orders.remove(order);
     }
