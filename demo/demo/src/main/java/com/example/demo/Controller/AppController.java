@@ -99,6 +99,7 @@ public class AppController {
     }
     @PostMapping("/createsimpleorder")
     public Order selectProducts(@RequestBody Map<String, Object> requestBody) {
+        simpleOrder = new SimpleOrder();
         String username = (String) requestBody.get("username");
         List<String> productNames = (List<String>) requestBody.get("names");
         simpleOrder.SelectProductsByNames(username, productNames);
@@ -109,6 +110,7 @@ public class AppController {
 
     @PostMapping("/createcompoundorder")
     public List<Order> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
+        compoundOrder = new CompoundOrder();
         for(Map<String, Object> entry : requestBody){
             String username = (String) entry.get("username");
             List<String> names = (List<String>) entry.get("names");
