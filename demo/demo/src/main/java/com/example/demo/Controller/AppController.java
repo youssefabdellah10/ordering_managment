@@ -98,35 +98,31 @@ public class AppController {
         String username = (String) requestBody.get("username");
         List<String> productNames = (List<String>) requestBody.get("names");
         simpleOrder.SelectProductsByNames(username, productNames);
+        orderState.OrderStatePlacement(username,simpleOrder.getOrderNumber());
         return simpleOrder;
 
     }
 
 
     @PostMapping("/createcompoundorder")
-    public List<List<Order>> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
-        List<List<Order>> allSelectedProducts = new ArrayList<>();
+    public List<Order> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
         for(Map<String, Object> entry : requestBody){
             String username = (String) entry.get("username");
+            System.out.println(username);
             List<String> names = (List<String>) entry.get("names");
+            System.out.println(names);
             compoundOrder.SelectProductsByNames(username, names);
         }
-        return Collections.singletonList(compoundOrder.GetChild());
+        return compoundOrder.GetChild();
     }
 
     @GetMapping("/returnorder/{username}/{orderNumber}")
     public Order returnOrder(@PathVariable("username") String username, @PathVariable("orderNumber") int orderNumber){
         return orderList.ReturnOrder(username,orderNumber);
     }
-    @PostMapping("/orderstate-placement/{username}/{orderID}")
-    public void OrderStatePlacement(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
-        orderState.OrderStatePlacement(username,orderID);
-    }
-    @PostMapping("/orderstate-cancellation/{username}/{orderID}")
+    @GetMapping("/orderstate-cancellation/{username}/{orderID}")
     public void OrderStateCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
         orderState.OrderStateCancellation(username,orderID);
     }
-
-
 
 }

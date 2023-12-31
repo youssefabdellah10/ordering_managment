@@ -15,25 +15,29 @@ public class CompoundOrder extends Order {
     private OrderList orderList = OrderList.getInstant();
     @Override
     public List<Product> SelectProductsByNames(String usernames,List<String> productNames){
+        Order simpleOrder = new SimpleOrder();
+        double temp =0;
         try {
-            setUsername(usernames);
+            simpleOrder.setUsername(usernames);
+            System.out.println(usernames);
             CustomerAccount account = new CustomerAccount();
             account = account.getAccount(usernames);
-            List<Product> selectedProducts = new ArrayList<>();
+            products = new ArrayList<>();
             for (String name : productNames) {
                 for (Product product : Common.products.values()) {
                         if (product.getName().equalsIgnoreCase(name)) {
-                            selectedProducts.add(product);
-                            Price = Price + product.getPrice();
-                            break;
+                            products.add(product);
+                            temp = temp + product.getPrice();
                         }
                     }
             }
-            products = selectedProducts;
-            Order order= this;
-            orderList.addOrder(account,order);
-            orders.add(order);
-            return selectedProducts;
+            simpleOrder.setProducts(products);
+            simpleOrder.setPrice(temp);
+            this.Price+=temp;
+            System.out.println(this.Price);
+            orderList.addOrder(account,simpleOrder);
+            orders.add(simpleOrder);
+            return simpleOrder.getProducts();
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());
         }
@@ -47,6 +51,9 @@ public class CompoundOrder extends Order {
         orders.add(order);
     }
     public List<Order> GetChild(){
+        for(Order order : orders) {
+            System.out.println(order.getUsername());
+        }
         return orders;
     }
 }

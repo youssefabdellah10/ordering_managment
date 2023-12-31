@@ -3,14 +3,24 @@ package com.example.demo.Model;
 import com.example.demo.Service.OrderState;
 import com.example.demo.Service.OrderShipmentState;
 
+import java.time.Instant;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 abstract public class Order {
     Random random = new Random();
     protected OrderState Orderstate = new OrderState();
     private OrderShipmentState Ordershipmentstate = new OrderShipmentState();
     protected boolean orderState = Orderstate.OrderState();
+    protected Instant startTime;
+
+
+    public Instant getTime() {
+        return startTime;
+    }
+
     protected boolean orderShipmentState = Ordershipmentstate.OrderShipmentState();
     protected double Price;
     protected double Shipping = 100;
@@ -18,6 +28,9 @@ abstract public class Order {
     protected String username;
     protected int orderNumber  = random.nextInt(0,10000009);
 
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public String getUsername() {
         return username;
@@ -27,7 +40,9 @@ abstract public class Order {
         this.username = username;
     }
 
-
+    public void setPrice(double price) {
+        Price = price;
+    }
 
     public boolean getOrderState() {
         return orderState;
@@ -53,4 +68,5 @@ abstract public class Order {
     {
         return Shipping;
     }
+
 }
