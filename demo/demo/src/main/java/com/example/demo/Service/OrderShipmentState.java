@@ -29,6 +29,7 @@ public class OrderShipmentState {
             LocalDateTime cancellationEndTime = shipmentStartTime.plusHours(allowedCancellationDurationInHours);
             LocalDateTime currentTime = LocalDateTime.now();
             if (currentTime.isAfter(cancellationEndTime)) {
+                System.out.println("Sorry,you can't cancel order shipment as you exceeded the allowed duration");
                 return;
             }
             orderList.ReturnOrder(username,orderID).setOrderShipmentState(false);
