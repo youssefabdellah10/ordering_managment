@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class SimpleOrder extends Order {
     private OrderList orderList = null;
-    private Notification notification = null;
 
     public SimpleOrder(){
         orderList = OrderList.getInstant();
@@ -40,6 +39,8 @@ public class SimpleOrder extends Order {
             Orderstate.OrderStatePlacement(username,getOrderNumber());
             notification = new OrderPlacementNotification();
             notification.send(account, products);
+            notification.setTempNum(0);
+
 
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());

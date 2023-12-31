@@ -28,6 +28,8 @@ public class AppController {
     CompoundOrder compoundOrder;
     @Autowired
     OrderState orderState;
+    @Autowired
+    SystemStatistics systemStatistics;
 
     @PostMapping("/signup")
     public Response signUp(@RequestBody CustomerAccount customerAccount){
@@ -133,5 +135,15 @@ public class AppController {
         System.out.println("in getALl");
         return notificationQueue.listQueue();
     }
+//    @GetMapping("/mostnotified")
+//    public String[] listqueue(){
+//        System.out.println("in getALl");
+//        return notificationQueue.listQueue();
+//    }
+@GetMapping("/mostsenttemplate")
+    public void mostsenttemplate(){
+        systemStatistics.mostSentTemplate();
+    }
+
 
 }

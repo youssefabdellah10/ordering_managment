@@ -6,7 +6,7 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.Product;
 
 import java.util.List;
-public class OrderPlacementNotification implements Notification {
+public class OrderPlacementNotification extends Notification {
     @Override
     public void send(CustomerAccount customerAccount, List<Product> products) {
         StringBuilder notification = new StringBuilder();
