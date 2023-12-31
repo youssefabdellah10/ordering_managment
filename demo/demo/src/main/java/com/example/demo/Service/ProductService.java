@@ -29,22 +29,6 @@ public class ProductService {
             return false;
         }return true;
     }
-//    public Vector<Product> getProduct(String name){
-//        try{
-//            Vector<Product> products = new Vector<>();
-//            int i=0;
-//            for(Product product : Common.products.values()){
-//                if(product.getName().equals(name)){
-//                    products.add(product);
-//                }
-//                i++;
-//            }
-//            return products;
-//        }catch (Exception e){
-//            System.out.println("Exception in getAllProducts as "+ e.getMessage());
-//        }
-//        return null;
-//    }
     public Product getProduct(String serialNumber){
         try {
             return Common.products.get(serialNumber);

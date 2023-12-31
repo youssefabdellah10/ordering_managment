@@ -4,15 +4,19 @@ import com.example.demo.Common;
 import com.example.demo.Model.CustomerAccount;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.Product;
+import com.example.demo.Model.Notification;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SimpleOrder extends Order {
-    private OrderList orderList = OrderList.getInstant();
+    private OrderList orderList = null;
+
+    public SimpleOrder(){
+        orderList = OrderList.getInstant();
+    }
 
     @Override
     public List<Product> SelectProductsByNames(String username,List<String> productNames) {
@@ -31,8 +35,14 @@ public class SimpleOrder extends Order {
             setUsername(username);
             CustomerAccount account = new CustomerAccount();
             account = account.getAccount(username);
-            startTime = Instant.now();
             orderList.addOrder(account,this);
+            Orderstate.OrderStatePlacement(username,getOrderNumber());
+            notification = new OrderPlacementNotification();
+            notification.send(account, products);
+            notification.setTempNum(0);
+            notification.setAccountNum(account);
+
+
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());
         }

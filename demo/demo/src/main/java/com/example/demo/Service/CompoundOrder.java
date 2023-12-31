@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CompoundOrder extends Order {
+
     private List<Order> orders = new ArrayList<>();
     private OrderList orderList = OrderList.getInstant();
     @Override

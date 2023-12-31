@@ -26,6 +26,7 @@ abstract public class Order {
     protected double Shipping = 100;
     protected List<Product> products;
     protected String username;
+    protected Notification notification = null;
     protected int orderNumber  = random.nextInt(0,10000009);
 
     public void setProducts(List<Product> products) {

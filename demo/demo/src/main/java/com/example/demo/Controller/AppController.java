@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,8 @@ public class AppController {
     @Autowired
     ProductService productService;
     @Autowired
+    NotificationQueue notificationQueue;
+    @Autowired
     SimpleOrder simpleOrder;
     @Autowired
     OrderList orderList;
@@ -26,6 +29,8 @@ public class AppController {
     CompoundOrder compoundOrder;
     @Autowired
     OrderState orderState;
+    @Autowired
+    SystemStatistics systemStatistics;
 
     @PostMapping("/signup")
     public Response signUp(@RequestBody CustomerAccount customerAccount){
@@ -98,31 +103,47 @@ public class AppController {
         String username = (String) requestBody.get("username");
         List<String> productNames = (List<String>) requestBody.get("names");
         simpleOrder.SelectProductsByNames(username, productNames);
-        orderState.OrderStatePlacement(username,simpleOrder.getOrderNumber());
         return simpleOrder;
 
     }
 
 
     @PostMapping("/createcompoundorder")
-    public List<Order> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
+    public List<List<Order>> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
+        List<List<Order>> allSelectedProducts = new ArrayList<>();
         for(Map<String, Object> entry : requestBody){
             String username = (String) entry.get("username");
-            System.out.println(username);
             List<String> names = (List<String>) entry.get("names");
-            System.out.println(names);
             compoundOrder.SelectProductsByNames(username, names);
         }
-        return compoundOrder.GetChild();
+        return Collections.singletonList(compoundOrder.GetChild());
     }
 
     @GetMapping("/returnorder/{username}/{orderNumber}")
     public Order returnOrder(@PathVariable("username") String username, @PathVariable("orderNumber") int orderNumber){
         return orderList.ReturnOrder(username,orderNumber);
     }
-    @GetMapping("/orderstate-cancellation/{username}/{orderID}")
+    @PostMapping("/orderstate-placement/{username}/{orderID}")
+    public void OrderStatePlacement(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
+        orderState.OrderStatePlacement(username,orderID);
+    }
+    @PostMapping("/orderstate-cancellation/{username}/{orderID}")
     public void OrderStateCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
         orderState.OrderStateCancellation(username,orderID);
     }
+    @GetMapping("/getalltemplates")
+    public String[] listqueue(){
+        System.out.println("in getALl");
+        return notificationQueue.listQueue();
+    }
+    @GetMapping("/mostsenttemplate")
+    public String  mostsenttemplate(){
+        return systemStatistics.mostSentTemplate();
+    }
+    @GetMapping("/mostnotified")
+    public String mostnotified(){
+        return systemStatistics.mostNotified();
+    }
+
 
 }
