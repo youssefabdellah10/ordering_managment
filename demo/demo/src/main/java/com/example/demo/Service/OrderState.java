@@ -59,13 +59,9 @@ public class OrderState {
         }else{
             double temp =0;
             temp = order.getOrderPrice();
-            System.out.println(order.getProducts().size());
-            System.out.println(Common.products.size());
             for(Product product : order.getProducts()){
                 System.out.println(product.getName());
                 for (Map.Entry<String, Product> entry : Common.products.entrySet()){
-                    System.out.println(entry.getValue());
-                    System.out.println(product);
                     if(product == entry.getValue()){
                         entry.getValue().setQuantity(product.getQuantity()+1);
                         order.setPrice(order.getOrderPrice()-product.getPrice());
@@ -74,7 +70,10 @@ public class OrderState {
             }
             order.getProducts().clear();
             orderState = false;
-            account.setBalance(account.getBalance() + temp);
+            order.setOrderState(false);
+            temp = account.getBalance() + temp;
+            account.setBalance(temp);
+            order.setPrice(0);
             Notification notification = new OrderCancellationNotification();
             orderList.ReturnOrder(username,orderID).setNotification(notification);
             notification.send(account, orderList.ReturnOrder(username,orderID).getProducts());

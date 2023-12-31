@@ -22,7 +22,6 @@ public class OrderShipmentState {
         if(orderList.ReturnOrder(username,orderID).getOrderShipmentState()){
             return;
         }else{
-            startshipmentTime = Instant.now();
             orderList.ReturnOrder(username,orderID).setOrderShipmentState(true);
             orderShipmentState = true;
             account.setBalance(account.getBalance() - orderList.ReturnOrder(username,orderID).getShipping());
@@ -37,17 +36,18 @@ public class OrderShipmentState {
     }
     public void OrderShipmentStateCancellation(String username, int orderID){
         CustomerAccount account = new CustomerAccount();
-        account.getAccount(username);
+        account = account.getAccount(username);
         Order order;
         order =  orderList.ReturnOrder(username,orderID);
         Instant cancelTime  = Instant.now();
-        Duration duration = Duration.between(startshipmentTime,cancelTime);
+        Duration duration = Duration.between(order.getStartShipmentTime(),cancelTime);
         if(duration.toSeconds() > 30 ){
             return;
         }else{
-            orderList.ReturnOrder(username,orderID).setOrderShipmentState(false);
+            System.out.println("ijdf");
+            order.setOrderShipmentState(false);
             orderShipmentState = false;
-            account.setBalance(account.getBalance() + orderList.ReturnOrder(username,orderID).getShipping());
+            account.setBalance(account.getBalance() + order.getShipping());
             Notification notification = new OrderCancellationNotification();
             orderList.ReturnOrder(username,orderID).setNotification(notification);
             notification.send(account, orderList.ReturnOrder(username,orderID).getProducts());

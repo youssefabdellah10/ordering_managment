@@ -7,6 +7,7 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.Product;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -37,11 +38,12 @@ public class CompoundOrder extends Order {
             System.out.println(this.Price);
             orderList.addOrder(account,simpleOrder);
             orders.add(simpleOrder);
-            Orderstate.OrderStatePlacement(username,getOrderNumber());
+            Orderstate.OrderStatePlacement(simpleOrder.getUsername(),simpleOrder.getOrderNumber());
             notification = new OrderPlacementNotification();
             notification.send(account, products);
             notification.setTempNum(0);
             notification.setAccountNum(account);
+            startTime = Instant.now();
             return simpleOrder.getProducts();
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());
