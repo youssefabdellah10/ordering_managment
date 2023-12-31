@@ -19,6 +19,8 @@ public class AppController {
     @Autowired
     ProductService productService;
     @Autowired
+    NotificationQueue notificationQueue;
+    @Autowired
     SimpleOrder simpleOrder;
     @Autowired
     OrderList orderList;
@@ -126,7 +128,10 @@ public class AppController {
     public void OrderStateCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
         orderState.OrderStateCancellation(username,orderID);
     }
-
-
+    @GetMapping("/getalltemplates")
+    public String[] listqueue(){
+        System.out.println("in getALl");
+        return notificationQueue.listQueue();
+    }
 
 }

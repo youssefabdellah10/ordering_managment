@@ -3,15 +3,18 @@ package com.example.demo.Service;
 
 import com.example.demo.Common;
 import com.example.demo.Model.CustomerAccount;
+import com.example.demo.Model.Notification;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.Product;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Map;
 
 @Service
 public class OrderState {
     private boolean orderState = false;
+    Notification notification;
     private OrderList orderList = OrderList.getInstant();
 
     public boolean OrderState() {
