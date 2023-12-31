@@ -16,25 +16,24 @@ public class CompoundOrder extends Order {
     @Override
     public List<Product> SelectProductsByNames(String usernames,List<String> productNames){
         try {
+            setUsername(usernames);
+            CustomerAccount account = new CustomerAccount();
+            account = account.getAccount(usernames);
             List<Product> selectedProducts = new ArrayList<>();
-                for (String name : productNames) {
-                    for (Product product : Common.products.values()) {
+            for (String name : productNames) {
+                for (Product product : Common.products.values()) {
                         if (product.getName().equalsIgnoreCase(name)) {
                             selectedProducts.add(product);
                             Price = Price + product.getPrice();
                             break;
                         }
                     }
-                }
-                setUsername(usernames);
-                products = selectedProducts;
-                CustomerAccount account = new CustomerAccount();
-                account = account.getAccount(usernames);
-                addToOrderList(account);
-                Order order= this;
-                orderList.addOrder(account,order);
-                orders.add(order);
-
+            }
+            products = selectedProducts;
+            Order order= this;
+            orderList.addOrder(account,order);
+            orders.add(order);
+            return selectedProducts;
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());
         }
@@ -49,9 +48,5 @@ public class CompoundOrder extends Order {
     }
     public List<Order> GetChild(){
         return orders;
-    }
-    public void addToOrderList(CustomerAccount account) {
-        OrderList orderList = OrderList.getInstant();
-        orderList.addOrder(account, this);
     }
 }

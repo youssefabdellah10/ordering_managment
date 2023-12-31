@@ -30,12 +30,12 @@ public class SimpleOrder extends Order {
                     }
                 }
             }
-
             products = selectedProducts;
             setUsername(username);
             CustomerAccount account = new CustomerAccount();
             account = account.getAccount(username);
             orderList.addOrder(account,this);
+            Orderstate.OrderStatePlacement(username,getOrderNumber());
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());
         }

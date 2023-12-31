@@ -104,15 +104,16 @@ public class AppController {
 
 
     @PostMapping("/createcompoundorder")
-    public List<Order> createCompoundOrder(@RequestBody Map<String, List<String>> requestBody) {
-        for(Map.Entry<String,List<String>> entry : requestBody.entrySet()){
-            String username = entry.getKey();
-            List<String> names = entry.getValue();
-            compoundOrder.SelectProductsByNames(username,names);
-            compoundOrder.addChild(compoundOrder)   ;
+    public List<List<Order>> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
+        List<List<Order>> allSelectedProducts = new ArrayList<>();
+        for(Map<String, Object> entry : requestBody){
+            String username = (String) entry.get("username");
+            List<String> names = (List<String>) entry.get("names");
+            compoundOrder.SelectProductsByNames(username, names);
         }
-        return compoundOrder.GetChild();
+        return Collections.singletonList(compoundOrder.GetChild());
     }
+
     @GetMapping("/returnorder/{username}/{orderNumber}")
     public Order returnOrder(@PathVariable("username") String username, @PathVariable("orderNumber") int orderNumber){
         return orderList.ReturnOrder(username,orderNumber);
