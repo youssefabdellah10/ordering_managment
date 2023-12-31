@@ -30,6 +30,7 @@ public class SimpleOrder extends Order {
                     }
                 }
             }
+
             products = selectedProducts;
             setUsername(username);
             CustomerAccount account = new CustomerAccount();

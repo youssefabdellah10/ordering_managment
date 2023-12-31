@@ -93,12 +93,13 @@ public class AppController {
         System.out.println("in getALl");
         return productService.getAllProducts();
     }
-    @PostMapping("/selectproducts")
+    @PostMapping("/createsimpleorder")
     public Order selectProducts(@RequestBody Map<String, Object> requestBody) {
         String username = (String) requestBody.get("username");
         List<String> productNames = (List<String>) requestBody.get("names");
         simpleOrder.SelectProductsByNames(username, productNames);
         return simpleOrder;
+
     }
 
 
@@ -124,6 +125,7 @@ public class AppController {
     public void OrderStateCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
         orderState.OrderStateCancellation(username,orderID);
     }
+
 
 
 }

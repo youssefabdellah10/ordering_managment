@@ -8,7 +8,7 @@ import java.util.Random;
 
 abstract public class Order {
     Random random = new Random();
-    private OrderState Orderstate = new OrderState();
+    protected OrderState Orderstate = new OrderState();
     private OrderShipmentState Ordershipmentstate = new OrderShipmentState();
     protected boolean orderState = Orderstate.OrderState();
     protected boolean orderShipmentState = Ordershipmentstate.OrderShipmentState();
