@@ -10,7 +10,7 @@ public abstract class Notification {
     public void setTempNum(int index){
         tempNum[index]++;
     }
-    public int maxtemp(){
+    public static int maxtemp(){
         int max=0;
         int index=-1;
         for(int i=0;i<4;i++){

@@ -141,8 +141,8 @@ public class AppController {
 //        return notificationQueue.listQueue();
 //    }
 @GetMapping("/mostsenttemplate")
-    public void mostsenttemplate(){
-        systemStatistics.mostSentTemplate();
+    public String  mostsenttemplate(){
+        return systemStatistics.mostSentTemplate();
     }
 
 

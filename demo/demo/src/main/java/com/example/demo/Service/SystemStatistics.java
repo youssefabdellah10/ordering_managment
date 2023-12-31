@@ -4,29 +4,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SystemStatistics {
-    Notification notification;
-    public void mostSentTemplate(){
+    public String mostSentTemplate(){
         try {
-            int maxtemp= notification.maxtemp();
-            if(notification.maxtemp()!=-1){
-                System.out.println("The most sent notification template is ");
+            StringBuilder message = new StringBuilder();
+            int maxtemp= Notification.maxtemp();
+            if(maxtemp !=-1){
+                message.append("The most sent notification template is ");
                 if(maxtemp==0){
-                System.out.println("Dear {x} , your booking of item {y} is confirmed. thanks for using our store :)");
+                message.append("Dear {x} , your booking of item {y} is confirmed. thanks for using our store :)");
 
                 }else if(maxtemp==1){
-                    System.out.println("Dear {x} , your shipment of item {y} is confirmed. thanks for using our store :)");
+                    message.append("Dear {x} , your shipment of item {y} is confirmed. thanks for using our store :)");
 
                 }else if(maxtemp==2){
-                    System.out.println("Dear {x} , your cancellation of item {y} is confirmed. thanks for using our store :)");
+                    message.append("Dear {x} , your cancellation of item {y} is confirmed. thanks for using our store :)");
 
                 }else if(maxtemp==3){
-                    System.out.println("Dear {x} , your cancellation of the shipment of item {y} is confirmed. thanks for using our store :)");
+                    message.append("Dear {x} , your cancellation of the shipment of item {y} is confirmed. thanks for using our store :)");
 
-            }}else {
-                System.out.println("No existing notification yet");}
+            } return  message.toString();}
+            else {
+                return  "No existing notification yet";}
         }catch (Exception e){
             System.out.println("Exception in mostnotified as "+ e.getMessage());
         }
+        return null;
     }
 
 
