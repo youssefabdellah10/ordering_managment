@@ -15,15 +15,31 @@ abstract public class Order {
     private OrderShipmentState Ordershipmentstate = new OrderShipmentState();
     protected boolean orderState = Orderstate.OrderState();
     protected Instant startTime;
+    protected Instant startShipmentTime;
 
+    public Instant getStartShipmentTime() {
+        return startShipmentTime;
+    }
+
+    public void setStartShipmentTime(Instant startShipmentTime) {
+        this.startShipmentTime = startShipmentTime;
+    }
 
     public Instant getTime() {
         return startTime;
     }
 
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
+
     protected boolean orderShipmentState = Ordershipmentstate.OrderShipmentState();
     protected double Price;
-    protected double Shipping = 100;
+    protected double Shipping = 50;
     protected List<Product> products;
     protected String username;
     protected Notification notification = null;

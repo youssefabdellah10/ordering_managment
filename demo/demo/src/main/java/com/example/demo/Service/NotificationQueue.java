@@ -1,16 +1,17 @@
 package com.example.demo.Service;
-import com.example.demo.Common;
-import com.example.demo.Model.Notification;
+
 import com.example.demo.Model.NotificationWrapper;
-import com.example.demo.Model.Product;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 @Service
 
 public class NotificationQueue {
     private static final Queue<NotificationWrapper> queue = new LinkedList<>();
+
     private static final long cleanup_interval = TimeUnit.MINUTES.toMinutes(5);
     public static void enqueueNotification(String notification){
 

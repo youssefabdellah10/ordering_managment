@@ -7,6 +7,7 @@ import com.example.demo.Model.Product;
 import com.example.demo.Model.Notification;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class SimpleOrder extends Order {
             notification.send(account, products);
             notification.setTempNum(0);
             notification.setAccountNum(account);
-
+            startTime = Instant.now();
 
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());

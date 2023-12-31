@@ -4,8 +4,10 @@ import com.example.demo.Model.CustomerAccount;
 import com.example.demo.Model.Notification;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+@Service
 public class OrderPlacementNotification extends Notification {
     @Override
     public void send(CustomerAccount customerAccount, List<Product> products) {

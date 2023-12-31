@@ -31,6 +31,8 @@ public class AppController {
     OrderState orderState;
     @Autowired
     SystemStatistics systemStatistics;
+    @Autowired
+    OrderShipmentState orderShipmentState;
 
     @PostMapping("/signup")
     public Response signUp(@RequestBody CustomerAccount customerAccount){
@@ -109,14 +111,13 @@ public class AppController {
 
 
     @PostMapping("/createcompoundorder")
-    public List<List<Order>> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
-        List<List<Order>> allSelectedProducts = new ArrayList<>();
+    public List<Order> createCompoundOrder(@RequestBody List<Map<String, Object>> requestBody) {
         for(Map<String, Object> entry : requestBody){
             String username = (String) entry.get("username");
             List<String> names = (List<String>) entry.get("names");
             compoundOrder.SelectProductsByNames(username, names);
         }
-        return Collections.singletonList(compoundOrder.GetChild());
+        return compoundOrder.GetChild();
     }
 
     @GetMapping("/returnorder/{username}/{orderNumber}")
@@ -144,6 +145,13 @@ public class AppController {
     public String mostnotified(){
         return systemStatistics.mostNotified();
     }
-
+    @PostMapping("/ordershipment-cancellation/{username}/{orderID}")
+    public void OrderShipmentCancellation(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
+        orderShipmentState.OrderShipmentStateCancellation(username, orderID);
+    }
+    @PostMapping("/ordershipment-placement/{username}/{orderID}")
+    public void OrderShipmentPlacement(@PathVariable("username") String username, @PathVariable("orderID") int orderID) {
+        orderShipmentState.OrderShipmentStatePlacement(username, orderID);
+    }
 
 }

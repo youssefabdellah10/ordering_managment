@@ -20,7 +20,6 @@ public class CompoundOrder extends Order {
         double temp =0;
         try {
             simpleOrder.setUsername(usernames);
-            System.out.println(usernames);
             CustomerAccount account = new CustomerAccount();
             account = account.getAccount(usernames);
             products = new ArrayList<>();
@@ -38,6 +37,11 @@ public class CompoundOrder extends Order {
             System.out.println(this.Price);
             orderList.addOrder(account,simpleOrder);
             orders.add(simpleOrder);
+            Orderstate.OrderStatePlacement(username,getOrderNumber());
+            notification = new OrderPlacementNotification();
+            notification.send(account, products);
+            notification.setTempNum(0);
+            notification.setAccountNum(account);
             return simpleOrder.getProducts();
         }catch (Exception e){
             System.out.println("Exception in selectProduct as "+e.getMessage());
@@ -52,9 +56,6 @@ public class CompoundOrder extends Order {
         orders.add(order);
     }
     public List<Order> GetChild(){
-        for(Order order : orders) {
-            System.out.println(order.getUsername());
-        }
         return orders;
     }
 }
