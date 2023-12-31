@@ -135,14 +135,13 @@ public class AppController {
         System.out.println("in getALl");
         return notificationQueue.listQueue();
     }
-//    @GetMapping("/mostnotified")
-//    public String[] listqueue(){
-//        System.out.println("in getALl");
-//        return notificationQueue.listQueue();
-//    }
-@GetMapping("/mostsenttemplate")
+    @GetMapping("/mostsenttemplate")
     public String  mostsenttemplate(){
         return systemStatistics.mostSentTemplate();
+    }
+    @GetMapping("/mostnotified")
+    public String mostnotified(){
+        return systemStatistics.mostNotified();
     }
 
 

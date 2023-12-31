@@ -1,12 +1,30 @@
 package com.example.demo.Model;
-import java.util.*;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.Map;
 
 public abstract class Notification {
     private static int[] tempNum = new int[4];  //the placement temp is in index 0, shipment 1, order cancellation 2 and shipment cancellation 3
+    public static Map<CustomerAccount, Integer> accountNum = new HashMap<>();
+    public void setAccountNum(CustomerAccount account){
+        if(!accountNum.containsKey(account)){
+            accountNum.put(account,0);
+        }else{
+            accountNum.put(account,accountNum.get(account)+1);
+        }
+
+    }
+    public static CustomerAccount maxAccount(){
+        int max=Integer.MIN_VALUE;
+        CustomerAccount accountWithMaxValue = null;
+        for(Map.Entry<CustomerAccount, Integer> entry : accountNum.entrySet()){
+            if(entry.getValue()>max){
+                max = entry.getValue();
+                accountWithMaxValue = entry.getKey();
+            }
+        }
+        return accountWithMaxValue;
+    }
     public void setTempNum(int index){
         tempNum[index]++;
     }

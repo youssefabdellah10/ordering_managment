@@ -40,6 +40,7 @@ public class SimpleOrder extends Order {
             notification = new OrderPlacementNotification();
             notification.send(account, products);
             notification.setTempNum(0);
+            notification.setAccountNum(account);
 
 
         }catch (Exception e){
