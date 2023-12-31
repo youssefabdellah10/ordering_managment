@@ -34,7 +34,7 @@ public class OrderShipmentState {
             }
             orderList.ReturnOrder(username,orderID).setOrderShipmentState(false);
             orderShipmentState = false;
-            account.setBalance(account.getBalance() - orderList.ReturnOrder(username,orderID).getShipping());
+            account.setBalance(account.getBalance() + orderList.ReturnOrder(username,orderID).getShipping());
         }
     }
 }
